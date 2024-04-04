@@ -3,8 +3,8 @@ import { CATEGORIES } from "./../data.js";
 import CategoryGridTile from "../components/CategoryGridTile.js";
 
 function CategoriesScreen({ navigation }) {
-  function navigationHandler() {
-    navigation.navigate("Recipe info");
+  function navigationHandler(categoryId) {
+    navigation.navigate("RecipeOverview", { categoryId });
   }
 
   return (
@@ -15,7 +15,7 @@ function CategoriesScreen({ navigation }) {
         <CategoryGridTile
           title={data.item.title}
           color={data.item.color}
-          onPress={navigationHandler}
+          onPress={navigationHandler.bind(this, data.item.id)}
         />
       )}
       numColumns={2}
