@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import CategoriesScreen from "./screens/CategoriesScreen";
@@ -19,8 +19,8 @@ export default function App() {
           },
           cardStyle: { backgroundColor: "#fef9c3" },
           headerTitleStyle: {
-            fontWeight: "700"
-          }
+            fontWeight: "700",
+          },
         }}
         initialRouteName="CategoriesScreen"
       >
@@ -49,6 +49,7 @@ export default function App() {
           <Stack.Screen
             name="MealsDetails"
             component={MealDetailScreen}
+           
           />
         </Stack.Group>
       </Stack.Navigator>
