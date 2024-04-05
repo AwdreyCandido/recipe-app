@@ -27,6 +27,7 @@ function RecipeOverview({ route }) {
   return (
     <View style={styles.container}>
       <FlatList
+        style={{ padding: 16 }}
         data={recipes}
         key={(item) => item.id}
         renderItem={renderRecipe}
@@ -38,7 +39,7 @@ function RecipeOverview({ route }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
+    paddingBottom: 20
   },
 });
 
