@@ -4,13 +4,13 @@
     "slug": "RecipeApp",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/imgs/meal.png",
     "backgroundColor": "#fef9c3",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "image": "./assets/imgs/meal.png",
+      "resizeMode": "native",
+      "backgroundColor": "#fde047"
     },
     "assetBundlePatterns": [
       "**/*"

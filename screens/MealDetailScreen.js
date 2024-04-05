@@ -1,4 +1,4 @@
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -9,20 +9,36 @@ import {
 } from "react-native";
 import { MEALS } from "./../data.js";
 import IconButton from "../components/IconButton.js";
+import { FavoritesContext } from "../store/context/favorites-context.js";
 
 function MealDetailScreen({ route, navigation }) {
+  const {
+    ids: favIds,
+    addFavorite,
+    removeFavorite,
+  } = useContext(FavoritesContext);
+
   const mealId = route.params.mealId;
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
+  let isFavorite = favIds.includes(mealId);
 
   function favoriteHandler() {
-    console.log("favorited");
+    if (isFavorite) {
+      removeFavorite(mealId);
+    } else {
+      addFavorite(mealId);
+    }
   }
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => {
+      headerRight: () => {  
         return (
-          <IconButton icon={"star"} color={"white"} onPress={favoriteHandler} />
+          <IconButton
+            icon={"star"}
+            color={isFavorite ? "#f97316" : "white"}
+            onPress={favoriteHandler}
+          />
         );
       },
     });

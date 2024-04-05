@@ -10,6 +10,7 @@ import CategoriesScreen from "./screens/CategoriesScreen";
 import RecipeOverview from "./screens/RecipeOverview";
 import MealDetailScreen from "./screens/MealDetailScreen";
 import FavoritesScreen from "./screens/FavoritesScreen";
+import FavoritesContextProvider from "./store/context/favorites-context";
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -56,48 +57,50 @@ function DrawerNavigator() {
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerStyle: {
-            backgroundColor: "#fde047",
-          },
-          cardStyle: { backgroundColor: "#fef9c3" },
-          headerTitleStyle: {
-            fontWeight: "700",
-          },
-        }}
-        initialRouteName="CategoriesScreen"
-      >
-        <Stack.Screen
-          name="CategoriesScreen"
-          component={DrawerNavigator}
-          options={{
-            title: "All Categories",
-            headerShown: false,
+    <FavoritesContextProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerStyle: {
+              backgroundColor: "#fde047",
+            },
+            cardStyle: { backgroundColor: "#fef9c3" },
+            headerTitleStyle: {
+              fontWeight: "700",
+            },
           }}
-        />
-        <Stack.Screen
-          name="RecipeOverview"
-          component={RecipeOverview}
-          options={({ route, navigation }) => {
-            const catId = route.params.categoryId;
-            const [category] = CATEGORIES.filter((category) => {
-              return category.id === catId;
-            });
+          initialRouteName="CategoriesScreen"
+        >
+          <Stack.Screen
+            name="CategoriesScreen"
+            component={DrawerNavigator}
+            options={{
+              title: "All Categories",
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="RecipeOverview"
+            component={RecipeOverview}
+            options={({ route, navigation }) => {
+              const catId = route.params.categoryId;
+              const [category] = CATEGORIES.filter((category) => {
+                return category.id === catId;
+              });
 
-            return {
-              title: category.title,
-            };
-          }}
-        />
-        <Stack.Screen
-          name="MealsDetails"
-          component={MealDetailScreen}
-          options={{ title: "About the Meal" }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+              return {
+                title: category.title,
+              };
+            }}
+          />
+          <Stack.Screen
+            name="MealsDetails"
+            component={MealDetailScreen}
+            options={{ title: "About the Meal" }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </FavoritesContextProvider>
   );
 }
 
