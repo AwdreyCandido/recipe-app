@@ -6,6 +6,7 @@ function renderRecipe(recipe) {
   item = recipe.item;
 
   const recipeProps = {
+    mealId: item.id,
     title: item.title,
     imageUrl: item.imageUrl,
     duration: item.duration,
