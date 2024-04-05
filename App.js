@@ -1,13 +1,42 @@
 import { StatusBar } from "expo-status-bar";
 import { Button, StyleSheet, Text, View } from "react-native";
+import { CATEGORIES } from "./data";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+
 import CategoriesScreen from "./screens/CategoriesScreen";
 import RecipeOverview from "./screens/RecipeOverview";
-import { CATEGORIES } from "./data";
 import MealDetailScreen from "./screens/MealDetailScreen";
+import FavoritesScreen from "./screens/FavoritesScreen";
 
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+
+function DrawerNavigator() {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#fde047",
+        },
+        sceneContainerStyle: { backgroundColor: "#fef9c3" },
+        headerTitleStyle: {
+          fontWeight: "700",
+        },
+      }}
+    >
+      <Drawer.Screen
+        name="Categories"
+        component={CategoriesScreen}
+        options={{
+          title: "All Categories",
+        }}
+      />
+      <Drawer.Screen name="Favorites" component={FavoritesScreen} />
+    </Drawer.Navigator>
+  );
+}
 
 export default function App() {
   return (
@@ -24,34 +53,33 @@ export default function App() {
         }}
         initialRouteName="CategoriesScreen"
       >
-        <Stack.Group>
-          <Stack.Screen
-            name="CategoriesScreen"
-            component={CategoriesScreen}
-            options={{
-              title: "All Categories",
-            }}
-          />
-          <Stack.Screen
-            name="RecipeOverview"
-            component={RecipeOverview}
-            options={({ route, navigation }) => {
-              const catId = route.params.categoryId;
-              const [category] = CATEGORIES.filter((category) => {
-                return category.id === catId;
-              });
+        <Stack.Screen
+          name="CategoriesScreen"
+          component={DrawerNavigator}
+          options={{
+            title: "All Categories",
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="RecipeOverview"
+          component={RecipeOverview}
+          options={({ route, navigation }) => {
+            const catId = route.params.categoryId;
+            const [category] = CATEGORIES.filter((category) => {
+              return category.id === catId;
+            });
 
-              return {
-                title: category.title,
-              };
-            }}
-          />
-          <Stack.Screen
-            name="MealsDetails"
-            component={MealDetailScreen}
-           
-          />
-        </Stack.Group>
+            return {
+              title: category.title,
+            };
+          }}
+        />
+        <Stack.Screen
+          name="MealsDetails"
+          component={MealDetailScreen}
+          options={{ title: "About the Meal" }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
